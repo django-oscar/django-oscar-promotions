@@ -1,9 +1,19 @@
 from setuptools import find_packages, setup
 
+sorl_thumbnail_version = 'sorl-thumbnail>=12.4.1,<12.5'
+easy_thumbnails_version = 'easy-thumbnails==2.5'
+
 test_requires = [
-    'pytest>=3.6.0',
-    'pytest-django',
-    'django-webtest==1.9.3'
+    'WebTest>=2.0,<2.1',
+    'django-webtest==1.9.4',
+    'py>=1.4.31',
+    'psycopg2>=2.7,<2.8',
+    'pytest>=4.0,<4.5',
+    'pytest-django==3.4.8',
+    'isort==4.3.21',
+    'flake8==3.7.8',
+    sorl_thumbnail_version,
+    easy_thumbnails_version,
 ]
 
 setup(
@@ -30,12 +40,11 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    install_requires=[
-        'django>=1.11,<2.2',
-        'django-oscar>=1.6',
-    ],
+    install_requires=['django>=1.11,<2.3', 'django-oscar>=2.0'],
     extras_require={
         'test': test_requires,
+        'sorl-thumbnail': [sorl_thumbnail_version],
+        'easy-thumbnails': [easy_thumbnails_version],
     },
     test_requires=test_requires
 )

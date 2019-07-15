@@ -2,9 +2,7 @@ from django.contrib.contenttypes import fields
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import pgettext_lazy
-
+from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from oscar.core.loading import get_model
 from oscar.models.fields import ExtendedURLField
 
@@ -21,7 +19,7 @@ class LinkedPromotion(models.Model):
     content_object = fields.GenericForeignKey('content_type', 'object_id')
 
     position = models.CharField(_("Position"), max_length=100,
-                                help_text="Position on page")
+                                help_text=_("Position on page"))
     display_order = models.PositiveIntegerField(_("Display Order"), default=0)
     clicks = models.PositiveIntegerField(_("Clicks"), default=0)
     date_created = models.DateTimeField(_("Date Created"), auto_now_add=True)
@@ -115,7 +113,7 @@ class AbstractPromotion(models.Model):
         """
         Returns the template to use to render this promotion.
         """
-        return 'promotions/%s.html' % self.code
+        return 'oscar_promotions/%s.html' % self.code
 
     def template_context(self, request):
         return {}

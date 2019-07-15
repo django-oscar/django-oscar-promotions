@@ -8,12 +8,7 @@ def base_location(location):
     return os.path.join(os.path.dirname(os.path.realpath(__file__)), location)
 
 
-ALLOWED_HOSTS = [
-    'latest.oscarcommerce.com',
-    'master.oscarcommerce.com',
-    'localhost',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = ['test', '.oscarcommerce.com']
 
 DATABASES = {
     'default': {
@@ -72,15 +67,12 @@ INSTALLED_APPS = [
     'haystack',
     'treebeard',
     'sorl.thumbnail',
-    'easy_thumbnails',
     'django_tables2',
-    'django_extensions',
 ]
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [base_location('templates')],
         'OPTIONS': {
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -132,16 +124,24 @@ HAYSTACK_CONNECTIONS = {
     'default': {'ENGINE': 'haystack.backends.simple_backend.SimpleEngine'}
 }
 PASSWORD_HASHERS = ['django.contrib.auth.hashers.MD5PasswordHasher']
-ROOT_URLCONF = 'sandbox.urls'
+ROOT_URLCONF = 'tests.urls'
 LOGIN_REDIRECT_URL = '/accounts/'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 PUBLIC_ROOT = base_location('public')
 MEDIA_ROOT = os.path.join(PUBLIC_ROOT, 'media')
-DEBUG = True
+DEBUG = False
 SITE_ID = 1
 USE_TZ = 1
 APPEND_SLASH = True
+DDF_DEFAULT_DATA_FIXTURE = 'tests.dynamic_fixtures.OscarDynamicDataFixtureClass'
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 LANGUAGE_CODE = 'en-gb'
 
+OSCAR_INITIAL_ORDER_STATUS = 'A'
+OSCAR_ORDER_STATUS_PIPELINE = {'A': ('B',), 'B': ()}
+OSCAR_INITIAL_LINE_STATUS = 'a'
+OSCAR_LINE_STATUS_PIPELINE = {'a': ('b',), 'b': ()}
+
 SECRET_KEY = 'notverysecret'
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'

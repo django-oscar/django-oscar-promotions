@@ -1,4 +1,4 @@
-{% extends 'dashboard/layout.html' %}
+{% extends 'oscar/dashboard/layout.html' %}
 {% load i18n %}
 
 {% block body_class %}{{ block.super }} create-page promotions{% endblock %}
@@ -28,7 +28,7 @@
 
         <form method="post" enctype="multipart/form-data" class="well form-stacked wysiwyg">
             {% csrf_token %}
-            {% include "dashboard/partials/form_fields.html" with form=form %}
+            {% include "oscar/dashboard/partials/form_fields.html" with form=form %}
 
             {% block inlines %} {% endblock %}
 
@@ -79,7 +79,7 @@
             <form method="post" class="form-stacked">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="add_to_page" />
-                {% include "dashboard/partials/form_fields.html" with form=link_form %}
+                {% include "oscar/dashboard/partials/form_fields.html" with form=link_form %}
                 <button type="submit" class="btn btn-success" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to page" %}</button>
             </form>
         </div>

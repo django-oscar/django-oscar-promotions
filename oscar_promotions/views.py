@@ -6,7 +6,7 @@ class HomeView(TemplateView):
     """
     This is the home page and will typically live at /
     """
-    template_name = 'oscar_promotions/promotions/home.html'
+    template_name = 'oscar_promotions/home.html'
 
 
 class RecordClickView(RedirectView):
