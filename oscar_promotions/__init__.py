@@ -1,1 +1,1 @@
-default_app_config = 'oscar_promotions.config.PromotionsConfig'
+default_app_config = 'oscar_promotions.apps.PromotionsConfig'

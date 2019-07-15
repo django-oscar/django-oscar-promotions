@@ -115,7 +115,7 @@ class AbstractPromotion(models.Model):
         """
         Returns the template to use to render this promotion.
         """
-        return 'promotions/%s.html' % self.code
+        return 'oscar_promotions/%s.html' % self.code
 
     def template_context(self, request):
         return {}

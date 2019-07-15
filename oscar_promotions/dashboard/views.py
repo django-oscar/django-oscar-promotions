@@ -117,8 +117,8 @@ class PageDetailView(generic.TemplateView):
 class PromotionMixin(object):
 
     def get_template_names(self):
-        return ['oscar_promotions/dashboard/promotions/%s_form.html' % self.model.classname(),
-                'oscar_promotions/dashboard/promotions/form.html']
+        return ['oscar_promotions/dashboard/%s_form.html' % self.model.classname(),
+                'oscar_promotions/dashboard/form.html']
 
 
 class DeletePagePromotionView(generic.DeleteView):
