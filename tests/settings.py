@@ -20,6 +20,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = [
+    # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -27,6 +28,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.flatpages",
+    "django.contrib.messages",
+    # Oscar apps
     "oscar",
     "oscar.apps.analytics",
     "oscar.apps.checkout",
@@ -56,16 +59,15 @@ INSTALLED_APPS = [
     "oscar.apps.dashboard.vouchers",
     "oscar.apps.dashboard.communications",
     "oscar.apps.dashboard.shipping",
+    # Oscar promotions apps
+    "oscar_promotions",
+    "oscar_promotions.dashboard",
     # 3rd-party apps that oscar depends on
     "widget_tweaks",
     "haystack",
     "treebeard",
     "sorl.thumbnail",
-    "easy_thumbnails",
     "django_tables2",
-    "oscar_promotions",
-    "oscar_promotions.dashboard",
-    "django_extensions",
 ]
 
 TEMPLATES = [
@@ -73,13 +75,8 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "OPTIONS": {
             "loaders": [
-                (
-                    "django.template.loaders.cached.Loader",
-                    [
-                        "django.template.loaders.filesystem.Loader",
-                        "django.template.loaders.app_directories.Loader",
-                    ],
-                )
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
             ],
             "context_processors": [
                 "django.contrib.auth.context_processors.auth",
@@ -93,6 +90,7 @@ TEMPLATES = [
                 "oscar.apps.customer.notifications.context_processors.notifications",
                 "oscar.apps.checkout.context_processors.checkout",
                 "oscar.core.context_processors.metadata",
+                "oscar_promotions.context_processors.promotions",
             ],
         },
     }

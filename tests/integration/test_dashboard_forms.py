@@ -1,5 +1,6 @@
 from django.test import TestCase
 from oscar.core.loading import get_model
+
 from oscar_promotions.dashboard import forms
 
 RawHTML = get_model("oscar_promotions", "RawHTML")

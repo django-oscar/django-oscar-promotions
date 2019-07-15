@@ -1,0 +1,17 @@
+{% extends "oscar/layout_2_col.html" %}
+{% load promotion_tags %}
+
+{% block content_wrapper %}
+    <div class="container-fluid">
+        <div class="page_inner">
+            <div class="content">
+                <div id="promotions">
+                    {% for promotion in promotions_page %}
+                        {% render_promotion promotion %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ block.super }}
+{% endblock content_wrapper %}

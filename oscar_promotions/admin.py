@@ -1,17 +1,16 @@
 from django.contrib import admin
-
 from oscar.core.loading import get_model
 
-AutomaticProductList = get_model('oscar_promotions', 'AutomaticProductList')
-HandPickedProductList = get_model('oscar_promotions', 'HandPickedProductList')
-Image = get_model('oscar_promotions', 'Image')
-KeywordPromotion = get_model('oscar_promotions', 'KeywordPromotion')
-MultiImage = get_model('oscar_promotions', 'MultiImage')
-OrderedProduct = get_model('oscar_promotions', 'OrderedProduct')
-PagePromotion = get_model('oscar_promotions', 'PagePromotion')
-RawHTML = get_model('oscar_promotions', 'RawHTML')
-SingleProduct = get_model('oscar_promotions', 'SingleProduct')
-TabbedBlock = get_model('oscar_promotions', 'TabbedBlock')
+AutomaticProductList = get_model("oscar_promotions", "AutomaticProductList")
+HandPickedProductList = get_model("oscar_promotions", "HandPickedProductList")
+Image = get_model("oscar_promotions", "Image")
+KeywordPromotion = get_model("oscar_promotions", "KeywordPromotion")
+MultiImage = get_model("oscar_promotions", "MultiImage")
+OrderedProduct = get_model("oscar_promotions", "OrderedProduct")
+PagePromotion = get_model("oscar_promotions", "PagePromotion")
+RawHTML = get_model("oscar_promotions", "RawHTML")
+SingleProduct = get_model("oscar_promotions", "SingleProduct")
+TabbedBlock = get_model("oscar_promotions", "TabbedBlock")
 
 
 class OrderProductInline(admin.TabularInline):
@@ -23,13 +22,13 @@ class HandPickedProductListAdmin(admin.ModelAdmin):
 
 
 class PagePromotionAdmin(admin.ModelAdmin):
-    list_display = ['page_url', 'content_object', 'position']
-    exclude = ['clicks']
+    list_display = ["page_url", "content_object", "position"]
+    exclude = ["clicks"]
 
 
 class KeywordPromotionAdmin(admin.ModelAdmin):
-    list_display = ['keyword', 'position', 'clicks']
-    readonly_fields = ['clicks']
+    list_display = ["keyword", "position", "clicks"]
+    readonly_fields = ["clicks"]
 
 
 admin.site.register(Image)

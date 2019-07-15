@@ -1,6 +1,5 @@
 from django.conf import settings
 
-
 OSCAR_PROMOTIONS_FOLDER = getattr(
     settings, "OSCAR_PROMOTIONS_FOLDER", "images/promotions/"
 )

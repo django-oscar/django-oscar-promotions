@@ -7,3 +7,4 @@ media/
 .idea/
 
 .pytest_cache/
+django_oscar_promotions.egg-info/
