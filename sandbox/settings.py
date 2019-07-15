@@ -77,7 +77,6 @@ INSTALLED_APPS = [
     "django_extensions",
 ]
 
-print(base_location("templates"))
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",

@@ -10,6 +10,8 @@ test_requires = [
     "psycopg2>=2.7,<2.8",
     "pytest>=4.0,<4.5",
     "pytest-django==3.4.8",
+    "isort==4.3.21",
+    "flake8==3.7.8",
     sorl_thumbnail_version,
     easy_thumbnails_version,
 ]
