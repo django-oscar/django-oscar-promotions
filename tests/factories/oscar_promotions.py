@@ -3,32 +3,32 @@ from oscar.core.loading import get_model
 
 from tests.factories.catalogue import ProductFactory
 
-PagePromotion = get_model("oscar_promotions", "PagePromotion")
-KeywordPromotion = get_model("oscar_promotions", "KeywordPromotion")
+PagePromotion = get_model('oscar_promotions', 'PagePromotion')
+KeywordPromotion = get_model('oscar_promotions', 'KeywordPromotion')
 
 
 class RawHTMLFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = get_model("oscar_promotions", "RawHTML")
+        model = get_model('oscar_promotions', 'RawHTML')
 
-    name = factory.Faker("sentence")
-    body = factory.Faker("text")
+    name = factory.Faker('sentence')
+    body = factory.Faker('text')
 
 
 class ImageFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = get_model("oscar_promotions", "Image")
+        model = get_model('oscar_promotions', 'Image')
 
-    name = factory.Faker("sentence")
-    link_url = factory.Faker("uri_path")
-    image = "image.jpg"
+    name = factory.Faker('sentence')
+    link_url = factory.Faker('uri_path')
+    image = 'image.jpg'
 
 
 class MultiImageFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = get_model("oscar_promotions", "MultiImage")
+        model = get_model('oscar_promotions', 'MultiImage')
 
-    name = factory.Faker("sentence")
+    name = factory.Faker('sentence')
 
     @factory.post_generation
     def images(self, *args, **kwargs):
@@ -38,21 +38,21 @@ class MultiImageFactory(factory.django.DjangoModelFactory):
 
 class SingleProductFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = get_model("oscar_promotions", "SingleProduct")
+        model = get_model('oscar_promotions', 'SingleProduct')
 
-    name = factory.Faker("sentence")
+    name = factory.Faker('sentence')
     product = factory.SubFactory(ProductFactory)
-    description = factory.Faker("text")
+    description = factory.Faker('text')
 
 
 class AutomaticProductListFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = get_model("oscar_promotions", "AutomaticProductList")
+        model = get_model('oscar_promotions', 'AutomaticProductList')
 
-    name = factory.Faker("sentence")
-    description = factory.Faker("text")
-    link_url = factory.Faker("uri_path")
-    link_text = factory.Faker("sentence")
+    name = factory.Faker('sentence')
+    description = factory.Faker('text')
+    link_url = factory.Faker('uri_path')
+    link_text = factory.Faker('sentence')
     method = factory.fuzzy.FuzzyChoice(
         [choice for choice, label in Meta.model.METHOD_CHOICES]
     )
@@ -65,12 +65,12 @@ class AutomaticProductListFactory(factory.django.DjangoModelFactory):
 
 class HandPickedProductListFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = get_model("oscar_promotions", "HandPickedProductList")
+        model = get_model('oscar_promotions', 'HandPickedProductList')
 
-    name = factory.Faker("sentence")
-    description = factory.Faker("text")
-    link_url = factory.Faker("uri_path")
-    link_text = factory.Faker("sentence")
+    name = factory.Faker('sentence')
+    description = factory.Faker('text')
+    link_url = factory.Faker('uri_path')
+    link_text = factory.Faker('sentence')
 
     @factory.post_generation
     def products(self, *args, **kwargs):
@@ -80,6 +80,6 @@ class HandPickedProductListFactory(factory.django.DjangoModelFactory):
 
 class TabbedBlockFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = get_model("oscar_promotions", "TabbedBlock")
+        model = get_model('oscar_promotions', 'TabbedBlock')
 
-    name = factory.Faker("sentence")
+    name = factory.Faker('sentence')

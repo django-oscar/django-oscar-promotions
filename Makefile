@@ -1,4 +1,4 @@
-test: pyclean isort lint run-tests black
+test: pyclean isort lint run-tests
 
 pyclean:
 	find . -name "*.pyc" -exec rm -rf {} \;
@@ -9,9 +9,6 @@ isort:
 
 lint:
 	flake8 .
-
-black:
-	black --check --exclude "migrations" .
 
 run-tests:
 	py.test

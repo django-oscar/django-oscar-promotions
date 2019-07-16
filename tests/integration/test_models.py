@@ -12,65 +12,65 @@ from tests.factories.oscar_promotions import (
     TabbedBlockFactory,
 )
 
-DefaultStrategy = get_class("partner.strategy", "Default")
+DefaultStrategy = get_class('partner.strategy', 'Default')
 
 
 class RawHTMLPromotionsTests(TestCase):
     def test_render_promotion(self):
         promotion = RawHTMLFactory()
-        render_promotion({"request": RequestFactory().get("/")}, promotion)
-        self.assertEqual("oscar_promotions/rawhtml.html", promotion.template_name())
+        render_promotion({'request': RequestFactory().get('/')}, promotion)
+        self.assertEqual('oscar_promotions/rawhtml.html', promotion.template_name())
 
 
 class ImagePromotionsTests(TestCase):
     def test_render_promotion(self):
         promotion = ImageFactory()
-        render_promotion({"request": RequestFactory().get("/")}, promotion)
-        self.assertEqual("oscar_promotions/image.html", promotion.template_name())
+        render_promotion({'request': RequestFactory().get('/')}, promotion)
+        self.assertEqual('oscar_promotions/image.html', promotion.template_name())
 
 
 class MultiImagePromotionsTests(TestCase):
     def test_render_promotion(self):
         promotion = MultiImageFactory()
-        render_promotion({"request": RequestFactory().get("/")}, promotion)
-        self.assertEqual("oscar_promotions/multiimage.html", promotion.template_name())
+        render_promotion({'request': RequestFactory().get('/')}, promotion)
+        self.assertEqual('oscar_promotions/multiimage.html', promotion.template_name())
 
 
 class SingleProductFactoryPromotionsTests(TestCase):
     def test_render_promotion(self):
         promotion = SingleProductFactory()
-        request = RequestFactory().get("/")
+        request = RequestFactory().get('/')
         request.strategy = DefaultStrategy()
-        render_promotion({"request": request}, promotion)
+        render_promotion({'request': request}, promotion)
         self.assertEqual(
-            "oscar_promotions/singleproduct.html", promotion.template_name()
+            'oscar_promotions/singleproduct.html', promotion.template_name()
         )
 
 
 class AutomaticProductListPromotionsTests(TestCase):
     def test_render_promotion(self):
         promotion = AutomaticProductListFactory()
-        request = RequestFactory().get("/")
+        request = RequestFactory().get('/')
         request.strategy = DefaultStrategy()
-        render_promotion({"request": request}, promotion)
+        render_promotion({'request': request}, promotion)
         self.assertEqual(
-            "oscar_promotions/automaticproductlist.html", promotion.template_name()
+            'oscar_promotions/automaticproductlist.html', promotion.template_name()
         )
 
 
 class HandPickedProductListPromotionsTests(TestCase):
     def test_render_promotion(self):
         promotion = HandPickedProductListFactory()
-        request = RequestFactory().get("/")
+        request = RequestFactory().get('/')
         request.strategy = DefaultStrategy()
-        render_promotion({"request": request}, promotion)
+        render_promotion({'request': request}, promotion)
         self.assertEqual(
-            "oscar_promotions/handpickedproductlist.html", promotion.template_name()
+            'oscar_promotions/handpickedproductlist.html', promotion.template_name()
         )
 
 
 class TabbedBlockPromotionsTests(TestCase):
     def test_render_promotion(self):
         promotion = TabbedBlockFactory()
-        render_promotion({"request": RequestFactory().get("/")}, promotion)
-        self.assertEqual("oscar_promotions/tabbedblock.html", promotion.template_name())
+        render_promotion({'request': RequestFactory().get('/')}, promotion)
+        self.assertEqual('oscar_promotions/tabbedblock.html', promotion.template_name())
