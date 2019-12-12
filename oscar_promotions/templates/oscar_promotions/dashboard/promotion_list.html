@@ -27,7 +27,7 @@
         <h3><i class="icon-folder-close icon-large"></i>{% trans "Create a new content block" %}</h3>
     </div>
     <div class="well">
-        <form action="{% url 'dashboard:promotion-create-redirect' %}" method="get" class="form-inline">
+        <form action="{% url 'oscar_promotions_dashboard:promotion-create-redirect' %}" method="get" class="form-inline">
             {% include "oscar/dashboard/partials/form_fields_inline.html" with form=select_form %}
             <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Creating...' %}"><i class="icon-plus"></i> {% trans "Create block" %}</button>
         </form>
@@ -48,7 +48,7 @@
             <tbody>
                 {% for promotion in promotions %}
                     <tr>
-                        <td><a href="{% url 'dashboard:promotion-update' ptype=promotion.code pk=promotion.id %}">{{ promotion.name }}</a></td>
+                        <td><a href="{% url 'oscar_promotions_dashboard:promotion-update' ptype=promotion.code pk=promotion.id %}">{{ promotion.name }}</a></td>
                         <td>{{ promotion.type }}</td>
                         <td>{{ promotion.num_times_used }}</td>
                         <td>{{ promotion.date_created }}</td>
@@ -60,8 +60,8 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
-                                        <li><a href="{% url 'dashboard:promotion-update' ptype=promotion.code pk=promotion.id %}">{% trans "Edit" %}</a></li>
-                                        <li><a href="{% url 'dashboard:promotion-delete' ptype=promotion.code pk=promotion.id %}">{% trans "Delete" %}</a></li>
+                                        <li><a href="{% url 'oscar_promotions_dashboard:promotion-update' ptype=promotion.code pk=promotion.id %}">{% trans "Edit" %}</a></li>
+                                        <li><a href="{% url 'oscar_promotions_dashboard:promotion-delete' ptype=promotion.code pk=promotion.id %}">{% trans "Delete" %}</a></li>
                                     </ul>
                                 </div>
                             </div>

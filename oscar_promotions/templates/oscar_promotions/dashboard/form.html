@@ -9,7 +9,7 @@
             <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
         </li>
         <li>
-            <a href="{% url 'dashboard:promotion-list' %}">{% trans "Content blocks" %}</a>
+            <a href="{% url 'oscar_promotions_dashboard:promotion-list' %}">{% trans "Content blocks" %}</a>
         </li>
         <li class="active">{{ heading }}</li>
     </ul>
@@ -34,7 +34,7 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Saving...' %}">{% trans "Save" %}</button>
-                {% trans "or" %} <a href="{% url 'dashboard:promotion-list' %}">{% trans "cancel" %}</a>
+                {% trans "or" %} <a href="{% url 'oscar_promotions_dashboard:promotion-list' %}">{% trans "cancel" %}</a>
             </div>
         </form>
 
@@ -61,7 +61,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="action" value="remove_from_page" />
                                     <input type="hidden" name="pagepromotion_id" value="{{ link.id }}" />
-                                    <a href="{% url 'dashboard:promotion-list-by-url' path=link.page_url %}" class="btn btn-info">{% trans "View all blocks on this page" %}</a>
+                                    <a href="{% url 'oscar_promotions_dashboard:promotion-list-by-url' path=link.page_url %}" class="btn btn-info">{% trans "View all blocks on this page" %}</a>
                                     <button class="btn btn-default" type="submit" data-loading-text="{% trans 'Removing...' %}">{% trans "Remove from page" %}</button>
                                 </form>
                             </td>

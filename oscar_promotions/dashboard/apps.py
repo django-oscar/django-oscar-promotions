@@ -25,22 +25,28 @@ class PromotionsDashboardConfig(OscarDashboardConfig):
 
     def ready(self):
         super().ready()
-        self.list_view = get_class('oscar_promotions.dashboard.views', 'ListView')
-        self.page_list = get_class('oscar_promotions.dashboard.views', 'PageListView')
+        self.list_view = get_class(
+            'oscar_promotions.dashboard.views', 'ListView', module_prefix='oscar_promotions'
+        )
+        self.page_list = get_class(
+            'oscar_promotions.dashboard.views', 'PageListView', module_prefix='oscar_promotions'
+        )
         self.page_detail = get_class(
-            'oscar_promotions.dashboard.views', 'PageDetailView'
+            'oscar_promotions.dashboard.views', 'PageDetailView', module_prefix='oscar_promotions'
         )
         self.create_redirect_view = get_class(
-            'oscar_promotions.dashboard.views', 'CreateRedirectView'
+            'oscar_promotions.dashboard.views', 'CreateRedirectView', module_prefix='oscar_promotions'
         )
         self.delete_page_promotion_view = get_class(
-            'oscar_promotions.dashboard.views', 'DeletePagePromotionView'
+            'oscar_promotions.dashboard.views', 'DeletePagePromotionView', module_prefix='oscar_promotions'
         )
         for klass in self.get_promotion_classes():
             for attr_name, view_name in self.view_names:
                 full_attr_name = attr_name % klass.classname()
                 full_view_name = view_name % klass.__name__
-                view = get_class('oscar_promotions.dashboard.views', full_view_name)
+                view = get_class(
+                    'oscar_promotions.dashboard.views', full_view_name, module_prefix='oscar_promotions'
+                )
                 setattr(self, full_attr_name, view)
 
     def get_urls(self):

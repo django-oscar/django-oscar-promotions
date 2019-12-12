@@ -9,6 +9,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("i18n/", include(i18n)),
     path("", apps.get_app_config("oscar_promotions").urls),
+    path("dashboard/promotions/", apps.get_app_config("oscar_promotions_dashboard").urls),
     path("", include(apps.get_app_config("oscar").urls[0])),
 ]
 

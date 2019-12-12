@@ -8,25 +8,30 @@ from django.shortcuts import HttpResponse
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
-from oscar.core.loading import get_class, get_classes
+from oscar.core.loading import get_class, get_classes, get_model
 
 from oscar_promotions import app_settings
 from oscar_promotions.conf import PROMOTION_CLASSES
 
+AutomaticProductList = get_model('oscar_promotions', 'AutomaticProductList')
+HandPickedProductList = get_model('oscar_promotions', 'HandPickedProductList')
+Image = get_model('oscar_promotions', 'Image')
+MultiImage = get_model('oscar_promotions', 'MultiImage')
+PagePromotion = get_model('oscar_promotions', 'PagePromotion')
+RawHTML = get_model('oscar_promotions', 'RawHTML')
+SingleProduct = get_model('oscar_promotions', 'SingleProduct')
 
-SingleProduct, RawHTML, Image, MultiImage, AutomaticProductList, \
-    PagePromotion, HandPickedProductList \
-    = get_classes('oscar_promotions.models',
-                  ['SingleProduct', 'RawHTML', 'Image', 'MultiImage',
-                   'AutomaticProductList', 'PagePromotion',
-                   'HandPickedProductList'])
+
 SelectForm, RawHTMLForm, PagePromotionForm, HandPickedProductListForm, \
     SingleProductForm  \
     = get_classes('oscar_promotions.dashboard.forms',
                   ['PromotionTypeSelectForm', 'RawHTMLForm',
                    'PagePromotionForm', 'HandPickedProductListForm',
-                   'SingleProductForm'])
-OrderedProductFormSet = get_class('oscar_promotions.dashboard.formsets', 'OrderedProductFormSet')
+                   'SingleProductForm'], module_prefix='oscar_promotions')
+
+OrderedProductFormSet = get_class(
+    'oscar_promotions.dashboard.formsets', 'OrderedProductFormSet', module_prefix='oscar_promotions'
+)
 
 
 class ListView(generic.TemplateView):

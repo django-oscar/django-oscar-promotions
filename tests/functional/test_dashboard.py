@@ -8,16 +8,16 @@ class DashboardViewsTests(WebTestCase):
 
     def test_pages_exist(self):
         urls = [
-            reverse('dashboard:promotion-list'),
-            reverse('dashboard:promotion-create-rawhtml'),
-            reverse('dashboard:promotion-create-singleproduct'),
-            reverse('dashboard:promotion-create-image'),
+            reverse('oscar_promotions_dashboard:promotion-list'),
+            reverse('oscar_promotions_dashboard:promotion-create-rawhtml'),
+            reverse('oscar_promotions_dashboard:promotion-create-singleproduct'),
+            reverse('oscar_promotions_dashboard:promotion-create-image'),
         ]
         for url in urls:
             self.assertIsOk(self.get(url))
 
     def test_create_redirects(self):
-        base_url = reverse('dashboard:promotion-create-redirect')
+        base_url = reverse('oscar_promotions_dashboard:promotion-create-redirect')
         p_types = ['rawhtml', 'singleproduct', 'image']
         for p_type in p_types:
             url = '{base_url}?promotion_type={p_type}'.format(

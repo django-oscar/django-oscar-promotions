@@ -14,8 +14,10 @@ class PromotionsConfig(OscarConfig):
 
     def ready(self):
         super().ready()
-        self.home_view = get_class('oscar_promotions.views', 'HomeView')
-        self.record_click_view = get_class('oscar_promotions.views', 'RecordClickView')
+        self.home_view = get_class('oscar_promotions.views', 'HomeView', module_prefix='oscar_promotions')
+        self.record_click_view = get_class(
+            'oscar_promotions.views', 'RecordClickView', module_prefix='oscar_promotions'
+        )
 
     def get_urls(self):
         PagePromotion = get_model('oscar_promotions', 'PagePromotion')

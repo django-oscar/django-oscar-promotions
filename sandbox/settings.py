@@ -9,18 +9,14 @@ def base_location(location):
 
 
 ALLOWED_HOSTS = [
-    'latest.oscarcommerce.com',
-    'master.oscarcommerce.com',
     'localhost',
     '127.0.0.1',
 ]
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DATABASE_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('DATABASE_NAME', 'promotions'),
-        'USER': os.environ.get('DATABASE_USER', 'promotions'),
-        'PASSWORD': os.environ.get('DATABASE_USER', 'promotions'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
@@ -51,7 +47,7 @@ INSTALLED_APPS = [
     'oscar.apps.search',
     'oscar.apps.voucher',
     'oscar.apps.wishlists',
-    'tests._site.apps.dashboard',
+    'sandbox.apps.dashboard',
     'oscar.apps.dashboard.reports',
     'oscar.apps.dashboard.users',
     'oscar.apps.dashboard.orders',
@@ -72,9 +68,7 @@ INSTALLED_APPS = [
     'haystack',
     'treebeard',
     'sorl.thumbnail',
-    'easy_thumbnails',
     'django_tables2',
-    'django_extensions',
 ]
 
 TEMPLATES = [
@@ -120,28 +114,33 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {'min_length': 6},
-    },
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
 HAYSTACK_CONNECTIONS = {
     'default': {'ENGINE': 'haystack.backends.simple_backend.SimpleEngine'}
 }
-PASSWORD_HASHERS = ['django.contrib.auth.hashers.MD5PasswordHasher']
+
 ROOT_URLCONF = 'sandbox.urls'
 LOGIN_REDIRECT_URL = '/accounts/'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 PUBLIC_ROOT = base_location('public')
 MEDIA_ROOT = os.path.join(PUBLIC_ROOT, 'media')
+
 DEBUG = True
 SITE_ID = 1
 USE_TZ = 1
 APPEND_SLASH = True
+
 LANGUAGE_CODE = 'en-gb'
 
 SECRET_KEY = 'notverysecret'
+
+OSCAR_DASHBOARD_NAVIGATION[5]['children'] += [      # noqa F405
+    {
+        'label': 'Content blocks',
+        'url_name': 'oscar_promotions_dashboard:promotion-list',
+    },
+    {
+        'label': 'Content blocks by page',
+        'url_name': 'oscar_promotions_dashboard:promotion-list-by-page',
+    },
+]

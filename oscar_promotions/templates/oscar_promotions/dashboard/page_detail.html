@@ -13,7 +13,7 @@
             <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
         </li>
         <li>
-            <a href="{% url 'dashboard:promotion-list' %}">{% trans "Content blocks" %}</a>
+            <a href="{% url 'oscar_promotions_dashboard:promotion-list' %}">{% trans "Content blocks" %}</a>
         </li>
         <li class="active">{% blocktrans %}Content blocks on page '{{ page_url }}'{% endblocktrans %}</li>
     </ul>
@@ -39,7 +39,7 @@
                 <tbody class="promotion_list">
                     {% for promotion in position.promotions %}
                         <tr id="promo_{{ promotion.pk }}">
-                            <td><a href="{% url 'dashboard:promotion-update' ptype=promotion.content_object.code pk=promotion.pk %}">{{ promotion.content_object.name }}</a></td>
+                            <td><a href="{% url 'oscar_promotions_dashboard:promotion-update' ptype=promotion.content_object.code pk=promotion.pk %}">{{ promotion.content_object.name }}</a></td>
                             <td>{{ promotion.content_object.type }}</td>
                             <td>
                                 <div class="btn-toolbar">
@@ -49,7 +49,7 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="{% url 'dashboard:promotion-update' ptype=promotion.content_object.code pk=promotion.content_object.id %}">{% trans "Edit" %}</a></li>
+                                            <li><a href="{% url 'oscar_promotions_dashboard:promotion-update' ptype=promotion.content_object.code pk=promotion.content_object.id %}">{% trans "Edit" %}</a></li>
                                             <li><a href="{% url 'dashboard:pagepromotion-delete' pk=promotion.id %}">{% trans "Remove" %}</a></li>
                                         </ul>
                                     </div>

@@ -1,21 +1,9 @@
-import os
-
 from oscar.defaults import *  # noqa
-
-
-# Path helper
-def base_location(location):
-    return os.path.join(os.path.dirname(os.path.realpath(__file__)), location)
-
-
-ALLOWED_HOSTS = ['test', '.oscarcommerce.com']
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DATABASE_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('DATABASE_NAME', 'promotions'),
-        'USER': os.environ.get('DATABASE_USER', 'promotions'),
-        'PASSWORD': os.environ.get('DATABASE_USER', 'promotions'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
@@ -96,7 +84,6 @@ TEMPLATES = [
     }
 ]
 
-
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -106,42 +93,23 @@ MIDDLEWARE = [
     'oscar.apps.basket.middleware.BasketMiddleware',
 ]
 
-
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {'min_length': 6},
-    },
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
 HAYSTACK_CONNECTIONS = {
     'default': {'ENGINE': 'haystack.backends.simple_backend.SimpleEngine'}
 }
-PASSWORD_HASHERS = ['django.contrib.auth.hashers.MD5PasswordHasher']
+
 ROOT_URLCONF = 'tests.urls'
 LOGIN_REDIRECT_URL = '/accounts/'
+
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-PUBLIC_ROOT = base_location('public')
-MEDIA_ROOT = os.path.join(PUBLIC_ROOT, 'media')
-DEBUG = False
+
 SITE_ID = 1
 USE_TZ = 1
 APPEND_SLASH = True
-DDF_DEFAULT_DATA_FIXTURE = 'tests.dynamic_fixtures.OscarDynamicDataFixtureClass'
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-LANGUAGE_CODE = 'en-gb'
-
-OSCAR_INITIAL_ORDER_STATUS = 'A'
-OSCAR_ORDER_STATUS_PIPELINE = {'A': ('B',), 'B': ()}
-OSCAR_INITIAL_LINE_STATUS = 'a'
-OSCAR_LINE_STATUS_PIPELINE = {'a': ('b',), 'b': ()}
 
 SECRET_KEY = 'notverysecret'
-TEST_RUNNER = 'django.test.runner.DiscoverRunner'

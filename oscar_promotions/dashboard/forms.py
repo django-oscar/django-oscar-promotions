@@ -1,17 +1,17 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-
-from oscar.core.loading import get_class, get_classes
+from oscar.core.loading import get_class, get_model
 from oscar.forms.fields import ExtendedURLField
 
 from oscar_promotions import app_settings
 from oscar_promotions.conf import PROMOTION_CLASSES
 
+HandPickedProductList = get_model('oscar_promotions', 'HandPickedProductList')
+OrderedProduct = get_model('oscar_promotions', 'OrderedProduct')
+PagePromotion = get_model('oscar_promotions', 'PagePromotion')
+RawHTML = get_model('oscar_promotions', 'RawHTML')
+SingleProduct = get_model('oscar_promotions', 'SingleProduct')
 
-HandPickedProductList, RawHTML, SingleProduct, PagePromotion, OrderedProduct \
-    = get_classes('oscar_promotions.models',
-                  ['HandPickedProductList', 'RawHTML', 'SingleProduct',
-                   'PagePromotion', 'OrderedProduct'])
 ProductSelect = get_class('dashboard.catalogue.widgets', 'ProductSelect')
 
 

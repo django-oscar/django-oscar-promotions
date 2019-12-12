@@ -1,12 +1,12 @@
-from oscar.core.loading import get_class
+from oscar.core.loading import get_model
 
-SingleProduct = get_class('oscar_promotions.models', 'SingleProduct')
-RawHTML = get_class('oscar_promotions.models', 'RawHTML')
-Image = get_class('oscar_promotions.models', 'Image')
-PagePromotion = get_class('oscar_promotions.models', 'PagePromotion')
-AutomaticProductList = get_class('oscar_promotions.models', 'AutomaticProductList')
-HandPickedProductList = get_class('oscar_promotions.models', 'HandPickedProductList')
-MultiImage = get_class('oscar_promotions.models', 'MultiImage')
+SingleProduct = get_model('oscar_promotions', 'SingleProduct')
+RawHTML = get_model('oscar_promotions', 'RawHTML')
+Image = get_model('oscar_promotions', 'Image')
+PagePromotion = get_model('oscar_promotions', 'PagePromotion')
+AutomaticProductList = get_model('oscar_promotions', 'AutomaticProductList')
+HandPickedProductList = get_model('oscar_promotions', 'HandPickedProductList')
+MultiImage = get_model('oscar_promotions', 'MultiImage')
 
 
 def get_promotion_classes():
