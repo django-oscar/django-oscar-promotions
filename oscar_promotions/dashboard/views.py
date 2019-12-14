@@ -8,26 +8,30 @@ from django.shortcuts import HttpResponse
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
-
-from oscar.core.loading import get_class, get_classes
+from oscar.core.loading import get_class, get_classes, get_model
 
 from oscar_promotions import app_settings
 from oscar_promotions.conf import PROMOTION_CLASSES
 
+AutomaticProductList = get_model('oscar_promotions', 'AutomaticProductList')
+HandPickedProductList = get_model('oscar_promotions', 'HandPickedProductList')
+Image = get_model('oscar_promotions', 'Image')
+MultiImage = get_model('oscar_promotions', 'MultiImage')
+PagePromotion = get_model('oscar_promotions', 'PagePromotion')
+RawHTML = get_model('oscar_promotions', 'RawHTML')
+SingleProduct = get_model('oscar_promotions', 'SingleProduct')
 
-SingleProduct, RawHTML, Image, MultiImage, AutomaticProductList, \
-    PagePromotion, HandPickedProductList \
-    = get_classes('oscar_promotions.models',
-                  ['SingleProduct', 'RawHTML', 'Image', 'MultiImage',
-                   'AutomaticProductList', 'PagePromotion',
-                   'HandPickedProductList'])
+
 SelectForm, RawHTMLForm, PagePromotionForm, HandPickedProductListForm, \
     SingleProductForm  \
     = get_classes('oscar_promotions.dashboard.forms',
                   ['PromotionTypeSelectForm', 'RawHTMLForm',
                    'PagePromotionForm', 'HandPickedProductListForm',
-                   'SingleProductForm'])
-OrderedProductFormSet = get_class('oscar_promotions.dashboard.formsets', 'OrderedProductFormSet')
+                   'SingleProductForm'], module_prefix='oscar_promotions')
+
+OrderedProductFormSet = get_class(
+    'oscar_promotions.dashboard.formsets', 'OrderedProductFormSet', module_prefix='oscar_promotions'
+)
 
 
 class ListView(generic.TemplateView):
@@ -58,8 +62,9 @@ class CreateRedirectView(generic.RedirectView):
         code = self.request.GET.get('promotion_type', None)
         urls = {}
         for klass in PROMOTION_CLASSES:
-            urls[klass.classname()] = reverse('dashboard:promotion-create-%s' %
-                                              klass.classname())
+            urls[klass.classname()] = reverse(
+                'oscar_promotions_dashboard:promotion-create-%s' %
+                klass.classname())
         return urls.get(code, None)
 
 
@@ -115,10 +120,9 @@ class PageDetailView(generic.TemplateView):
 
 
 class PromotionMixin(object):
-
     def get_template_names(self):
-        return ['oscar_promotions/dashboard/promotions/%s_form.html' % self.model.classname(),
-                'oscar_promotions/dashboard/promotions/form.html']
+        return ['oscar_promotions/dashboard/%s_form.html' % self.model.classname(),
+                'oscar_promotions/dashboard/form.html']
 
 
 class DeletePagePromotionView(generic.DeleteView):
@@ -127,7 +131,7 @@ class DeletePagePromotionView(generic.DeleteView):
 
     def get_success_url(self):
         messages.info(self.request, _("Content block removed successfully"))
-        return reverse('dashboard:promotion-list-by-url',
+        return reverse('oscar_promotions_dashboard:promotion-list-by-url',
                        kwargs={'path': self.object.page_url})
 
 
@@ -140,7 +144,7 @@ class CreateView(PromotionMixin, generic.CreateView):
 
     def get_success_url(self):
         messages.success(self.request, _("Content block created successfully"))
-        return reverse('dashboard:promotion-update',
+        return reverse('oscar_promotions_dashboard:promotion-update',
                        kwargs={'ptype': self.model.classname(),
                                'pk': self.object.id})
 
@@ -237,7 +241,7 @@ class UpdateView(PromotionMixin, generic.UpdateView):
 
     def get_success_url(self):
         messages.info(self.request, _("Content block updated successfully"))
-        return reverse('dashboard:promotion-list')
+        return reverse('oscar_promotions_dashboard:promotion-list')
 
     def add_to_page(self, promotion, request, *args, **kwargs):
         instance = PagePromotion(content_object=self.get_object())
@@ -249,8 +253,9 @@ class UpdateView(PromotionMixin, generic.UpdateView):
                                         " page '%(page)s'")
                              % {'block': promotion.name,
                                 'page': page_url})
-            return HttpResponseRedirect(reverse('dashboard:promotion-update',
-                                                kwargs=kwargs))
+            return HttpResponseRedirect(
+                reverse('oscar_promotions_dashboard:promotion-update',
+                        kwargs=kwargs))
 
         main_form = self.get_form_class()(instance=self.object)
         ctx = self.get_context_data(form=main_form)
@@ -268,8 +273,9 @@ class UpdateView(PromotionMixin, generic.UpdateView):
             link.delete()
             messages.success(request, _("Content block removed from page '%s'")
                              % page_url)
-        return HttpResponseRedirect(reverse('dashboard:promotion-update',
-                                            kwargs=kwargs))
+        return HttpResponseRedirect(
+            reverse('oscar_promotions_dashboard:promotion-update',
+                    kwargs=kwargs))
 
 
 class UpdateRawHTMLView(UpdateView):
@@ -334,7 +340,7 @@ class DeleteView(generic.DeleteView):
 
     def get_success_url(self):
         messages.info(self.request, _("Content block deleted successfully"))
-        return reverse('dashboard:promotion-list')
+        return reverse('oscar_promotions_dashboard:promotion-list')
 
 
 class DeleteRawHTMLView(DeleteView):

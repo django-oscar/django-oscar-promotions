@@ -1,4 +1,4 @@
-{% extends 'dashboard/layout.html' %}
+{% extends 'oscar/dashboard/layout.html' %}
 {% load i18n %}
 
 {% block body_class %}{{ block.super }} create-page{% endblock %}
@@ -9,7 +9,7 @@
             <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
         </li>
         <li>
-            <a href="{% url 'dashboard:promotion-list' %}">{% trans "Content blocks" %}</a>
+            <a href="{% url 'oscar_promotions_dashboard:promotion-list' %}">{% trans "Content blocks" %}</a>
         </li>
         <li class="active">{% trans "Remove promotion from page?" %}</li>
     </ul>
@@ -29,7 +29,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn btn-danger" data-loading-text="{% trans 'Removing...' %}">{% trans "Remove" %}</button>
-            {% trans "or" %} <a href="{% url 'dashboard:promotion-list-by-url' path=object.page_url  %}">{% trans "cancel" %}</a>
+            {% trans "or" %} <a href="{% url 'oscar_promotions_dashboard:promotion-list-by-url' path=object.page_url  %}">{% trans "cancel" %}</a>
         </div>
     </form>
 {% endblock %}

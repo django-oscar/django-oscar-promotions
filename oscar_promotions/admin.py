@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from oscar.core.loading import get_model
 
 AutomaticProductList = get_model('oscar_promotions', 'AutomaticProductList')

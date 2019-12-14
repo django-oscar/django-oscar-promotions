@@ -1,11 +1,5 @@
 from setuptools import find_packages, setup
 
-test_requires = [
-    'pytest>=3.6.0',
-    'pytest-django',
-    'django-webtest==1.9.3'
-]
-
 setup(
     name='django-oscar-promotions',
     version='1.0',
@@ -29,13 +23,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
-    install_requires=[
-        'django>=1.11,<2.2',
-        'django-oscar>=1.6',
-    ],
-    extras_require={
-        'test': test_requires,
-    },
-    test_requires=test_requires
+    install_requires=['django>=1.11,<2.3', 'django-oscar>=2.0'],
 )
