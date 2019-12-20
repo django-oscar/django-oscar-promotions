@@ -9,6 +9,8 @@ a standalone app.
 Installation
 ~~~~~~~~~~~~
 
+Install the package with ``pip install django-oscar-promotions``.
+
 Add the following entries to ``INSTALLED_APPS``:
 
 .. code-block:: python
