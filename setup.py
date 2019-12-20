@@ -1,8 +1,11 @@
+#!/usr/bin/env python
 from setuptools import find_packages, setup
+
+from oscar_promotions import VERSION
 
 setup(
     name='django-oscar-promotions',
-    version='1.0',
+    version=VERSION,
     url='https://github.com/oscaro/django-oscar-promotins',
     author='Oscar Team',
     author_email='sasha@metaclass.co',

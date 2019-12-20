@@ -1,2 +1,3 @@
 include *.rst
 recursive-include oscar_promotions/templates *.html
+recursive-include oscar_promotions/static *.css

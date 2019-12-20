@@ -7,4 +7,6 @@ media/
 .idea/
 
 .pytest_cache/
+build/
+dist/
 *.egg-info
