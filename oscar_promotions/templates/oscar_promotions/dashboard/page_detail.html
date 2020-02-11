@@ -50,7 +50,7 @@
                                         </button>
                                         <ul class="dropdown-menu pull-right">
                                             <li><a href="{% url 'oscar_promotions_dashboard:promotion-update' ptype=promotion.content_object.code pk=promotion.content_object.id %}">{% trans "Edit" %}</a></li>
-                                            <li><a href="{% url 'dashboard:pagepromotion-delete' pk=promotion.id %}">{% trans "Remove" %}</a></li>
+                                            <li><a href="{% url 'oscar_promotions_dashboard:pagepromotion-delete' pk=promotion.id %}">{% trans "Remove" %}</a></li>
                                         </ul>
                                     </div>
                                     <a href="#" class="btn btn-info btn-handle"><i class="icon-move icon-large"></i> {% trans "Change display order" %}</a>
