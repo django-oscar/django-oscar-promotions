@@ -8,6 +8,7 @@ class PromotionsDashboardConfig(OscarDashboardConfig):
 
     label = 'oscar_promotions_dashboard'
     name = 'oscar_promotions.dashboard'
+    namespace = 'oscar_promotions_dashboard'
     verbose_name = _("Promotions dashboard")
     default_permissions = ['is_staff']
 
