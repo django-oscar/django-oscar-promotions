@@ -150,7 +150,7 @@ class RawHTML(AbstractPromotion):
     body = models.TextField(_("HTML"))
     date_created = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _('Raw HTML')
         verbose_name_plural = _('Raw HTML')
 
@@ -178,7 +178,7 @@ class Image(AbstractPromotion):
     def __str__(self):
         return self.name
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _("Image")
         verbose_name_plural = _("Image")
 
@@ -201,7 +201,7 @@ class MultiImage(AbstractPromotion):
     def __str__(self):
         return self.name
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _("Multi Image")
         verbose_name_plural = _("Multi Images")
 
@@ -219,7 +219,7 @@ class SingleProduct(AbstractPromotion):
     def template_context(self, request):
         return {'product': self.product}
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _("Single product")
         verbose_name_plural = _("Single product")
 
@@ -237,7 +237,7 @@ class AbstractProductList(AbstractPromotion):
     link_text = models.CharField(_("Link text"), max_length=255, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         abstract = True
         verbose_name = _("Product list")
         verbose_name_plural = _("Product lists")
@@ -266,7 +266,7 @@ class HandPickedProductList(AbstractProductList):
     def get_products(self):
         return self.get_queryset()
 
-    class Meta:
+    class Meta(AbstractProductList.Meta):
         verbose_name = _("Hand Picked Product List")
         verbose_name_plural = _("Hand Picked Product Lists")
 
@@ -314,7 +314,7 @@ class AutomaticProductList(AbstractProductList):
     def get_products(self):
         return self.get_queryset()[:self.num_products]
 
-    class Meta:
+    class Meta(AbstractProductList.Meta):
         verbose_name = _("Automatic product list")
         verbose_name_plural = _("Automatic product lists")
 
@@ -327,7 +327,7 @@ class OrderedProductList(HandPickedProductList):
         verbose_name=_("Tabbed Block"))
     display_order = models.PositiveIntegerField(_('Display Order'), default=0)
 
-    class Meta:
+    class Meta(HandPickedProductList.Meta):
         ordering = ('display_order',)
         verbose_name = _("Ordered Product List")
         verbose_name_plural = _("Ordered Product Lists")
@@ -340,6 +340,6 @@ class TabbedBlock(AbstractPromotion):
         pgettext_lazy("Tabbed block title", "Title"), max_length=255)
     date_created = models.DateTimeField(_("Date Created"), auto_now_add=True)
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _("Tabbed Block")
         verbose_name_plural = _("Tabbed Blocks")
