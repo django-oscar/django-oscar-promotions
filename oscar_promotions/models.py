@@ -23,6 +23,7 @@ class LinkedPromotion(models.Model):
     display_order = models.PositiveIntegerField(_("Display Order"), default=0)
     clicks = models.PositiveIntegerField(_("Clicks"), default=0)
     date_created = models.DateTimeField(_("Date Created"), auto_now_add=True)
+    site = models.ForeignKey('sites.Site', on_delete=models.CASCADE, null=False, blank=False, default=1)
 
     class Meta:
         abstract = True
@@ -91,6 +92,8 @@ class AbstractPromotion(models.Model):
                                       verbose_name=_('Keywords'))
     pages = fields.GenericRelation(PagePromotion, verbose_name=_('Pages'))
 
+    site = models.ForeignKey('sites.Site', on_delete=models.CASCADE, null=False, blank=False, default=1)
+
     class Meta:
         abstract = True
         app_label = 'oscar_promotions'
@@ -139,6 +142,7 @@ class RawHTML(AbstractPromotion):
     """
     _type = 'Raw HTML'
     name = models.CharField(_("Name"), max_length=128)
+
 
     # Used to determine how to render the promotion (eg
     # if a different width container is required).  This isn't always
