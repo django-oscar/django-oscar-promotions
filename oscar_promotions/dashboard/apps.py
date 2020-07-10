@@ -10,7 +10,7 @@ class PromotionsDashboardConfig(OscarDashboardConfig):
     name = 'oscar_promotions.dashboard'
     namespace = 'oscar_promotions_dashboard'
     verbose_name = _("Promotions dashboard")
-    default_permissions = ['is_staff']
+    default_permissions = ['is_staff', 'partner.dashboard_access']
 
     # Dynamically set the CRUD views for all promotion classes
     view_names = (

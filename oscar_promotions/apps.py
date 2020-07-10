@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.utils.translation import gettext_lazy as _
 from oscar.core.application import OscarConfig
 from oscar.core.loading import get_class, get_model
+from oscar_promotions import views
 
 
 class PromotionsConfig(OscarConfig):
@@ -14,7 +15,8 @@ class PromotionsConfig(OscarConfig):
 
     def ready(self):
         super().ready()
-        self.home_view = get_class('oscar_promotions.views', 'HomeView', module_prefix='oscar_promotions')
+        self.home_view = views.VFHomeView
+        self.amp_home_view = views.AMPHomeView
         self.record_click_view = get_class(
             'oscar_promotions.views', 'RecordClickView', module_prefix='oscar_promotions'
         )
@@ -33,6 +35,7 @@ class PromotionsConfig(OscarConfig):
                 self.record_click_view.as_view(model=KeywordPromotion),
                 name='keyword-click',
             ),
+            url(r'^amp/$', self.amp_home_view.as_view(), name='amp_home'),
             url(r'^$', self.home_view.as_view(), name='home'),
         ]
         return self.post_process_urls(urls)

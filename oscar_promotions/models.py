@@ -1,7 +1,11 @@
+import datetime
+
+import pytz
 from django.contrib.contenttypes import fields
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
+from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from oscar.core.loading import get_model
 from oscar.models.fields import ExtendedURLField
@@ -347,3 +351,43 @@ class TabbedBlock(AbstractPromotion):
     class Meta(AbstractPromotion.Meta):
         verbose_name = _("Tabbed Block")
         verbose_name_plural = _("Tabbed Blocks")
+
+
+class TimeBasedPromotion(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=100)
+    available_since_date = models.DateField(blank=True, null=True)
+    available_since_time = models.TimeField()
+    available_until_date = models.DateField(blank=True, null=True)
+    available_until_time = models.TimeField()
+    promotional_code = models.CharField(max_length=50, blank=True, null=True)
+    call_to_action = models.CharField(max_length=200, blank=True, null=True)
+    link = models.CharField(max_length=200, blank=True, null=True)
+    enabled = models.BooleanField(default=True)
+    icon_name = models.CharField(max_length=30, null=True, blank=True)
+    site = models.ForeignKey('sites.Site', on_delete=models.CASCADE, null=False, blank=False, default=1)
+
+    def get_remaining_time(self):
+        """
+        :return: None if no expire time defined.
+        :return: DateTime instance until which this promo should show.
+
+        """
+        until_date = self.available_until_date
+        until_time = self.available_until_time
+
+        if until_date is None and until_time is None:
+            return None
+
+        if until_date is None:
+            current_timezone = pytz.timezone(settings.TIME_ZONE)
+            current_datetime = now().astimezone(current_timezone)
+
+            until_date = current_datetime.date()
+
+        if until_time is None:
+            until_time = datetime.time(hour=23, minute=59, second=59)
+
+        until_datetime = datetime.datetime.combine(until_date, until_time)
+
+        return until_datetime
