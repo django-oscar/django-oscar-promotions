@@ -15,8 +15,12 @@ class PromotionsConfig(OscarConfig):
 
     def ready(self):
         super().ready()
-        self.home_view = views.VFHomeView
-        self.amp_home_view = views.AMPHomeView
+        self.home_view = get_class(
+            'oscar_promotions.views', 'VFHomeView', module_prefix='oscar_promotions'
+        )
+        self.amp_home_view = get_class(
+            'oscar_promotions.views', 'AMPHomeView', module_prefix='oscar_promotions'
+        )
         self.record_click_view = get_class(
             'oscar_promotions.views', 'RecordClickView', module_prefix='oscar_promotions'
         )
