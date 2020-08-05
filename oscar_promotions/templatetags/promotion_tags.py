@@ -11,10 +11,11 @@ from django.db.models import Q
 
 from oscar_promotions.models import TimeBasedPromotion, MultiImage
 
-from constance import config
+from dynamic_preferences.registries import global_preferences_registry
 
 register = template.Library()
 logger = logging.getLogger(__name__)
+global_preferences = global_preferences_registry.manager()
 
 register = Library()
 
@@ -70,7 +71,7 @@ def get_time_promotion():
 @register.simple_tag()
 def get_multi_images_promotion():
     try:
-        multi_image = MultiImage.objects.get(name=config.PROMOTIONAL_CAROUSEL)
+        multi_image = MultiImage.objects.get(name=global_preferences['PromotionalOffer__PROMOTIONAL_CAROUSEL'])
     except MultiImage.DoesNotExist as err:
         logger.exception(err)
     else:
