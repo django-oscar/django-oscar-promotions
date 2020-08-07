@@ -55,7 +55,7 @@ class PromotionsDashboardConfig(OscarDashboardConfig):
             url(r'^$', self.list_view.as_view(), name='promotion-list'),
             url(r'^pages/$', self.page_list.as_view(), name='promotion-list-by-page'),
             url(
-                r'^page/-(?P<path>/([\w-]+(/[\w-]+)*/)?)$',
+                r'^page/-(?P<path>/(([\w-]|\s)+(/([\w-]|\s)+)*/)?)$',
                 self.page_detail.as_view(),
                 name='promotion-list-by-url',
             ),
