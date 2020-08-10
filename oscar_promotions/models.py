@@ -96,7 +96,8 @@ class AbstractPromotion(models.Model):
                                       verbose_name=_('Keywords'))
     pages = fields.GenericRelation(PagePromotion, verbose_name=_('Pages'))
 
-    site = models.ForeignKey('sites.Site', on_delete=models.CASCADE, null=False, blank=False, default=1)
+    site = models.ForeignKey('sites.Site', on_delete=models.CASCADE, null=False, blank=False, default=1,
+                             verbose_name=_('Site'))
 
     class Meta:
         abstract = True

@@ -196,18 +196,18 @@ class CreateSingleProductView(CreateView):
 
 class CreateImageView(CreateView):
     model = Image
-    fields = ['name', 'link_url', 'image']
+    fields = ['name', 'link_url', 'image', 'site']
 
 
 class CreateMultiImageView(CreateView):
     model = MultiImage
-    fields = ['name']
+    fields = ['name', 'site']
 
 
 class CreateAutomaticProductListView(CreateView):
     model = AutomaticProductList
     fields = ['name', 'description', 'link_url', 'link_text', 'method',
-              'num_products']
+              'num_products', 'site']
 
 
 class CreateHandPickedProductListView(CreateView):
@@ -315,12 +315,12 @@ class UpdateSingleProductView(UpdateView):
 
 class UpdateImageView(UpdateView):
     model = Image
-    fields = ['name', 'link_url', 'image']
+    fields = ['name', 'link_url', 'image', 'site']
 
 
 class UpdateMultiImageView(UpdateView):
     model = MultiImage
-    fields = ['name', 'images']
+    fields = ['name', 'images', 'site']
 
 
 class UpdateAutomaticProductListView(UpdateView):

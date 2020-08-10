@@ -28,7 +28,7 @@ class PromotionTypeSelectForm(forms.Form):
 class RawHTMLForm(forms.ModelForm):
     class Meta:
         model = RawHTML
-        fields = ['name', 'body']
+        fields = ['name', 'body', 'site']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,14 +38,14 @@ class RawHTMLForm(forms.ModelForm):
 class SingleProductForm(forms.ModelForm):
     class Meta:
         model = SingleProduct
-        fields = ['name', 'product', 'description']
+        fields = ['name', 'product', 'description', 'site']
         widgets = {'product': ProductSelect}
 
 
 class HandPickedProductListForm(forms.ModelForm):
     class Meta:
         model = HandPickedProductList
-        fields = ['name', 'description', 'link_url', 'link_text']
+        fields = ['name', 'description', 'link_url', 'link_text', 'site']
 
 
 class OrderedProductForm(forms.ModelForm):
