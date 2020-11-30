@@ -176,6 +176,7 @@ class Image(AbstractPromotion):
     """
     _type = 'Image'
     name = models.CharField(_("Name"), max_length=128)
+    cta_text = models.TextField(_('CTA Text'), blank=True, help_text=_('Call to action text'))
     link_url = ExtendedURLField(
         _('Link URL'), blank=True,
         help_text=_('This is where this promotion links to'))
