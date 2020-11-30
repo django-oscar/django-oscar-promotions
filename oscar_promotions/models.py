@@ -1,7 +1,11 @@
+import datetime
+
+import pytz
 from django.contrib.contenttypes import fields
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
+from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from oscar.core.loading import get_model
 from oscar.models.fields import ExtendedURLField
@@ -23,6 +27,7 @@ class LinkedPromotion(models.Model):
     display_order = models.PositiveIntegerField(_("Display Order"), default=0)
     clicks = models.PositiveIntegerField(_("Clicks"), default=0)
     date_created = models.DateTimeField(_("Date Created"), auto_now_add=True)
+    site = models.ForeignKey('sites.Site', on_delete=models.CASCADE, null=False, blank=False, default=1)
 
     class Meta:
         abstract = True
@@ -91,6 +96,9 @@ class AbstractPromotion(models.Model):
                                       verbose_name=_('Keywords'))
     pages = fields.GenericRelation(PagePromotion, verbose_name=_('Pages'))
 
+    site = models.ForeignKey('sites.Site', on_delete=models.CASCADE, null=False, blank=False, default=1,
+                             verbose_name=_('Site'))
+
     class Meta:
         abstract = True
         app_label = 'oscar_promotions'
@@ -140,6 +148,7 @@ class RawHTML(AbstractPromotion):
     _type = 'Raw HTML'
     name = models.CharField(_("Name"), max_length=128)
 
+
     # Used to determine how to render the promotion (eg
     # if a different width container is required).  This isn't always
     # required.
@@ -150,7 +159,7 @@ class RawHTML(AbstractPromotion):
     body = models.TextField(_("HTML"))
     date_created = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _('Raw HTML')
         verbose_name_plural = _('Raw HTML')
 
@@ -167,6 +176,7 @@ class Image(AbstractPromotion):
     """
     _type = 'Image'
     name = models.CharField(_("Name"), max_length=128)
+    cta_text = models.TextField(_('CTA Text'), blank=True, help_text=_('Call to action text'))
     link_url = ExtendedURLField(
         _('Link URL'), blank=True,
         help_text=_('This is where this promotion links to'))
@@ -178,7 +188,7 @@ class Image(AbstractPromotion):
     def __str__(self):
         return self.name
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _("Image")
         verbose_name_plural = _("Image")
 
@@ -201,7 +211,7 @@ class MultiImage(AbstractPromotion):
     def __str__(self):
         return self.name
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _("Multi Image")
         verbose_name_plural = _("Multi Images")
 
@@ -219,7 +229,7 @@ class SingleProduct(AbstractPromotion):
     def template_context(self, request):
         return {'product': self.product}
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _("Single product")
         verbose_name_plural = _("Single product")
 
@@ -237,7 +247,7 @@ class AbstractProductList(AbstractPromotion):
     link_text = models.CharField(_("Link text"), max_length=255, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         abstract = True
         verbose_name = _("Product list")
         verbose_name_plural = _("Product lists")
@@ -266,7 +276,7 @@ class HandPickedProductList(AbstractProductList):
     def get_products(self):
         return self.get_queryset()
 
-    class Meta:
+    class Meta(AbstractProductList.Meta):
         verbose_name = _("Hand Picked Product List")
         verbose_name_plural = _("Hand Picked Product Lists")
 
@@ -314,7 +324,7 @@ class AutomaticProductList(AbstractProductList):
     def get_products(self):
         return self.get_queryset()[:self.num_products]
 
-    class Meta:
+    class Meta(AbstractProductList.Meta):
         verbose_name = _("Automatic product list")
         verbose_name_plural = _("Automatic product lists")
 
@@ -327,7 +337,7 @@ class OrderedProductList(HandPickedProductList):
         verbose_name=_("Tabbed Block"))
     display_order = models.PositiveIntegerField(_('Display Order'), default=0)
 
-    class Meta:
+    class Meta(HandPickedProductList.Meta):
         ordering = ('display_order',)
         verbose_name = _("Ordered Product List")
         verbose_name_plural = _("Ordered Product Lists")
@@ -340,6 +350,46 @@ class TabbedBlock(AbstractPromotion):
         pgettext_lazy("Tabbed block title", "Title"), max_length=255)
     date_created = models.DateTimeField(_("Date Created"), auto_now_add=True)
 
-    class Meta:
+    class Meta(AbstractPromotion.Meta):
         verbose_name = _("Tabbed Block")
         verbose_name_plural = _("Tabbed Blocks")
+
+
+class TimeBasedPromotion(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=100)
+    available_since_date = models.DateField(blank=True, null=True)
+    available_since_time = models.TimeField()
+    available_until_date = models.DateField(blank=True, null=True)
+    available_until_time = models.TimeField()
+    promotional_code = models.CharField(max_length=50, blank=True, null=True)
+    call_to_action = models.CharField(max_length=200, blank=True, null=True)
+    link = models.CharField(max_length=200, blank=True, null=True)
+    enabled = models.BooleanField(default=True)
+    icon_name = models.CharField(max_length=30, null=True, blank=True)
+    site = models.ForeignKey('sites.Site', on_delete=models.CASCADE, null=False, blank=False, default=1)
+
+    def get_remaining_time(self):
+        """
+        :return: None if no expire time defined.
+        :return: DateTime instance until which this promo should show.
+
+        """
+        until_date = self.available_until_date
+        until_time = self.available_until_time
+
+        if until_date is None and until_time is None:
+            return None
+
+        if until_date is None:
+            current_timezone = pytz.timezone(settings.TIME_ZONE)
+            current_datetime = now().astimezone(current_timezone)
+
+            until_date = current_datetime.date()
+
+        if until_time is None:
+            until_time = datetime.time(hour=23, minute=59, second=59)
+
+        until_datetime = datetime.datetime.combine(until_date, until_time)
+
+        return until_datetime

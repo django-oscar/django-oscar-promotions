@@ -1,5 +1,7 @@
 from django import forms
+from django.contrib.sites.models import Site
 from django.utils.translation import gettext_lazy as _
+from django.forms import SelectMultiple
 from oscar.core.loading import get_class, get_model
 from oscar.forms.fields import ExtendedURLField
 
@@ -26,7 +28,7 @@ class PromotionTypeSelectForm(forms.Form):
 class RawHTMLForm(forms.ModelForm):
     class Meta:
         model = RawHTML
-        fields = ['name', 'body']
+        fields = ['name', 'body', 'site']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -36,14 +38,14 @@ class RawHTMLForm(forms.ModelForm):
 class SingleProductForm(forms.ModelForm):
     class Meta:
         model = SingleProduct
-        fields = ['name', 'product', 'description']
+        fields = ['name', 'product', 'description', 'site']
         widgets = {'product': ProductSelect}
 
 
 class HandPickedProductListForm(forms.ModelForm):
     class Meta:
         model = HandPickedProductList
-        fields = ['name', 'description', 'link_url', 'link_text']
+        fields = ['name', 'description', 'link_url', 'link_text', 'site']
 
 
 class OrderedProductForm(forms.ModelForm):
@@ -79,3 +81,12 @@ class PagePromotionForm(forms.ModelForm):
             page_url += '/'
 
         return page_url
+
+
+class PromotionsSearchForm(forms.Form):
+
+    sites_choices = (('', '---------'),) + tuple([(k, v) for k, v in Site.objects.all().values_list("id", "name")])
+    sites = forms.MultipleChoiceField(
+        choices=sites_choices, label=_("Site"), required=False,
+        widget=SelectMultiple(attrs={'data-multiple': 'true'})
+    )

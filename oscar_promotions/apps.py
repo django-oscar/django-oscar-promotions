@@ -14,7 +14,6 @@ class PromotionsConfig(OscarConfig):
 
     def ready(self):
         super().ready()
-        self.home_view = get_class('oscar_promotions.views', 'HomeView', module_prefix='oscar_promotions')
         self.record_click_view = get_class(
             'oscar_promotions.views', 'RecordClickView', module_prefix='oscar_promotions'
         )
@@ -33,6 +32,5 @@ class PromotionsConfig(OscarConfig):
                 self.record_click_view.as_view(model=KeywordPromotion),
                 name='keyword-click',
             ),
-            url(r'^$', self.home_view.as_view(), name='home'),
         ]
         return self.post_process_urls(urls)

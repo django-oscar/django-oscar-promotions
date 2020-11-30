@@ -10,7 +10,7 @@ class PromotionsDashboardConfig(OscarDashboardConfig):
     name = 'oscar_promotions.dashboard'
     namespace = 'oscar_promotions_dashboard'
     verbose_name = _("Promotions dashboard")
-    default_permissions = ['is_staff']
+    default_permissions = ['is_staff', 'partner.dashboard_access']
 
     # Dynamically set the CRUD views for all promotion classes
     view_names = (
@@ -55,7 +55,7 @@ class PromotionsDashboardConfig(OscarDashboardConfig):
             url(r'^$', self.list_view.as_view(), name='promotion-list'),
             url(r'^pages/$', self.page_list.as_view(), name='promotion-list-by-page'),
             url(
-                r'^page/-(?P<path>/([\w-]+(/[\w-]+)*/)?)$',
+                r'^page/-(?P<path>/(([\w-]|\s)+(/([\w-]|\s)+)*/)?)$',
                 self.page_detail.as_view(),
                 name='promotion-list-by-url',
             ),
