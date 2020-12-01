@@ -3,4 +3,4 @@ coverage==6.2
 django-webtest==1.9.7
 pytest-django>=3.7,<4.5
 tox>=2.9,<3.21
-sorl-thumbnail>=12.4.1,<12.7
+sorl-thumbnail>=12.4.1,<12.8
