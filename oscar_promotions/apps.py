@@ -6,33 +6,37 @@ from oscar.core.loading import get_class, get_model
 
 class PromotionsConfig(OscarConfig):
 
-    label = 'oscar_promotions'
-    name = 'oscar_promotions'
+    label = "oscar_promotions"
+    name = "alinox.oscar_promotions"
     verbose_name = _("Promotions")
 
-    namespace = 'promotions'
+    namespace = "promotions"
 
     def ready(self):
         super().ready()
-        self.home_view = get_class('oscar_promotions.views', 'HomeView', module_prefix='oscar_promotions')
+        self.home_view = get_class(
+            "oscar_promotions.views", "HomeView", module_prefix="oscar_promotions"
+        )
         self.record_click_view = get_class(
-            'oscar_promotions.views', 'RecordClickView', module_prefix='oscar_promotions'
+            "oscar_promotions.views",
+            "RecordClickView",
+            module_prefix="oscar_promotions",
         )
 
     def get_urls(self):
-        PagePromotion = get_model('oscar_promotions', 'PagePromotion')
-        KeywordPromotion = get_model('oscar_promotions', 'KeywordPromotion')
+        PagePromotion = get_model("oscar_promotions", "PagePromotion")
+        KeywordPromotion = get_model("oscar_promotions", "KeywordPromotion")
         urls = [
             url(
-                r'page-redirect/(?P<page_promotion_id>\d+)/$',
+                r"page-redirect/(?P<page_promotion_id>\d+)/$",
                 self.record_click_view.as_view(model=PagePromotion),
-                name='page-click',
+                name="page-click",
             ),
             url(
-                r'keyword-redirect/(?P<keyword_promotion_id>\d+)/$',
+                r"keyword-redirect/(?P<keyword_promotion_id>\d+)/$",
                 self.record_click_view.as_view(model=KeywordPromotion),
-                name='keyword-click',
+                name="keyword-click",
             ),
-            url(r'^$', self.home_view.as_view(), name='home'),
+            url(r"^$", self.home_view.as_view(), name="home"),
         ]
         return self.post_process_urls(urls)

@@ -6,14 +6,12 @@ register = Library()
 
 @register.simple_tag(takes_context=True)
 def render_promotion(context, promotion):
-    template = select_template([
-        promotion.template_name(), 'oscar_promotions/default.html'])
-    request = context['request']
+    template = select_template(
+        [promotion.template_name(), "oscar_promotions/default.html"]
+    )
+    request = context["request"]
 
-    ctx = {
-        'request': request,
-        'promotion': promotion
-    }
+    ctx = {"request": request, "promotion": promotion}
     ctx.update(**promotion.template_context(request=request))
 
     return template.render(ctx, request)
