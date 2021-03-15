@@ -19,7 +19,7 @@ setup(
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 2.0',
+        'Framework :: Django :: 3.0',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: Unix',
@@ -27,5 +27,5 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    install_requires=['django>=1.11,<2.3', 'django-oscar>=2.0'],
+    install_requires=['django>=2.2,<3.2', 'django-oscar>=3.0'],
 )
