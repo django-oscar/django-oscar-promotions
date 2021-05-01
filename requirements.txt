@@ -1,6 +1,6 @@
 django-oscar>=2.0,<2.1
 coverage==5.3
 django-webtest==1.9.7
-pytest-django>=3.7,<4.2
+pytest-django>=3.7,<4.3
 tox>=2.9,<3.21
 sorl-thumbnail>=12.4.1,<12.7
