@@ -6,7 +6,7 @@ from oscar_promotions import VERSION
 setup(
     name='django-oscar-promotions',
     version=VERSION,
-    url='https://github.com/oscaro/django-oscar-promotins',
+    url='https://github.com/django-oscar/django-oscar-promotions',
     author='Oscar Team',
     author_email='sasha@metaclass.co',
     description='Promotions for Django Oscar',
