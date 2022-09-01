@@ -27,5 +27,5 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    install_requires=['django>=2.2,<3.3', 'django-oscar>=2.0,<2.3'],
+    install_requires=['django>=2.2,<4.2', 'django-oscar>=2.0,<2.3'],
 )
