@@ -3,7 +3,7 @@ coverage
 django-webtest==1.9.10
 pytest-django>=3.7,<4.5
 tox>=2.9,<3.26
-sorl-thumbnail>=12.4.1,<12.9
+sorl-thumbnail>=12.4.1,<12.10
 
 # Development
 flake8
