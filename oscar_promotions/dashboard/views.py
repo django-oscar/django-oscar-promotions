@@ -12,6 +12,7 @@ from oscar.core.loading import get_class, get_classes, get_model
 
 from oscar_promotions import app_settings
 from oscar_promotions.conf import PROMOTION_CLASSES
+from oscar_promotions.dashboard.forms import PromotionsSearchForm
 
 AutomaticProductList = get_model('oscar_promotions', 'AutomaticProductList')
 HandPickedProductList = get_model('oscar_promotions', 'HandPickedProductList')
@@ -35,6 +36,8 @@ OrderedProductFormSet = get_class(
 
 
 class ListView(generic.TemplateView):
+    form = None
+    form_class = PromotionsSearchForm
     template_name = 'oscar_promotions/dashboard/promotion_list.html'
 
     def get_context_data(self):
@@ -44,6 +47,7 @@ class ListView(generic.TemplateView):
         num_promotions = 0
         for klass in PROMOTION_CLASSES:
             objects = klass.objects.all()
+            objects = self.apply_search(objects)
             num_promotions += objects.count()
             data.append(objects)
         promotions = itertools.chain(*data)
@@ -51,8 +55,29 @@ class ListView(generic.TemplateView):
             'num_promotions': num_promotions,
             'promotions': promotions,
             'select_form': SelectForm(),
+            'form': self.form
         }
         return ctx
+
+    def apply_search(self, queryset):
+        """
+        Search through the filtered queryset.
+
+        We must make sure that we don't return search results that the user is not allowed
+        to see (see filter_queryset).
+        """
+        self.form = self.form_class(self.request.GET)
+
+        if not self.form.is_valid():
+            return queryset
+
+        data = self.form.cleaned_data
+
+        site_list = data.get("sites", [])
+        if len(site_list) > 0:
+            queryset = queryset.filter(site_id__in=site_list)
+
+        return queryset
 
 
 class CreateRedirectView(generic.RedirectView):
@@ -171,18 +196,18 @@ class CreateSingleProductView(CreateView):
 
 class CreateImageView(CreateView):
     model = Image
-    fields = ['name', 'link_url', 'image']
+    fields = ['name', 'link_url', 'image', 'site']
 
 
 class CreateMultiImageView(CreateView):
     model = MultiImage
-    fields = ['name']
+    fields = ['name', 'site']
 
 
 class CreateAutomaticProductListView(CreateView):
     model = AutomaticProductList
     fields = ['name', 'description', 'link_url', 'link_text', 'method',
-              'num_products']
+              'num_products', 'site']
 
 
 class CreateHandPickedProductListView(CreateView):
@@ -290,12 +315,12 @@ class UpdateSingleProductView(UpdateView):
 
 class UpdateImageView(UpdateView):
     model = Image
-    fields = ['name', 'link_url', 'image']
+    fields = ['name', 'link_url', 'image', 'site']
 
 
 class UpdateMultiImageView(UpdateView):
     model = MultiImage
-    fields = ['name', 'images']
+    fields = ['name', 'images', 'site']
 
 
 class UpdateAutomaticProductListView(UpdateView):
